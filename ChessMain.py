@@ -8,12 +8,6 @@ max_fps = 15
 imgs = {}
 p.init()
 
-def show_board(self):
-    for row in self.board:
-        for piece in row:
-            print(piece, end="")
-        print('')
-
 def loadImages():
     pieces = ["bP", "bR", "bN", "bB", "bK", "bQ", "wP", "wR", "wN", "wB", "wK", "wQ"]
     for piece in pieces:
@@ -24,14 +18,49 @@ def main():
     screen = p.display.set_mode((width, height))
     clock = p.time.Clock()
     screen.fill(p.Color("white"))
-    game = ChessEngine.GameState()
-    loadImages()
     
+    game = ChessEngine.GameState()
+    validMoves = game.getValidMoves()
+    moveMade = False
+    
+    loadImages()
+    sqSelected = ()
     running = True
+    playerClicks = []
+    
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
+                
+            elif e.type == p.MOUSEBUTTONDOWN:
+                location = p.mouse.get_pos()
+                col = location[0]//sq_size
+                row = location[1]//sq_size
+                if sqSelected == (row, col):
+                    sqSelected = ()
+                    playerClicks = []
+                else:
+                    sqSelected = (row, col)
+                    playerClicks.append(sqSelected)
+                if len(playerClicks) == 2:
+                    move = ChessEngine.Move(playerClicks[0], playerClicks[1], game.board)
+                    print(move.getChessNotation())
+                    if move in validMoves:
+                        game.makeMove(move)
+                        moveMade = True
+                    sqSelected = ()
+                    playerClicks = []
+                    
+            elif e.type == p.KEYDOWN:
+                if e.key == p.K_z:
+                    game.undoMove()
+                    moveMade = True
+                    
+        if moveMade:
+            validMoves = game.getValidMoves()
+            moveMade = False            
+                
         clock.tick(max_fps)
         p.display.flip()
         drawGameState(screen, game)
@@ -42,7 +71,7 @@ def drawGameState(screen, game):
     
     
 def drawBoard(screen):
-    colors = [p.Color('white'), p.Color('gray')]
+    colors = [p.Color('white'), p.Color('grey')]
     for r in range(dimensions):
         for c in range(dimensions):
             color = colors[((r + c) % 2)]
@@ -50,7 +79,11 @@ def drawBoard(screen):
     
     
 def drawPieces(screen, board):
-    pass
+    for r in range(dimensions):
+        for c in range(dimensions):
+            piece = board[r][c]
+            if piece != '..':
+                screen.blit(imgs[piece], p.Rect(c*sq_size, r*sq_size, sq_size, sq_size))
     
 if __name__ == '__main__':
     main()
