@@ -1,8 +1,11 @@
-# Overview
+# Chess AI
 
-This Chess Engine is a computer program designed to handle the logic and rules of the game of chess. It provides functionality for move generation, position evaluation, and other essential operations required for playing chess. 
+This Chess Engine is a computer program designed to handle the logic and rules of the game of chess. It provides functionality for move generation, position evaluation, and other essential operations required for playing chess.
 
-# Features
+16/06/2023
+> - Currently the code only acts as an engine for chess and has no AI functionality currently, however this will be added in future progression.
+
+## Features
 
 > - Move Generation: The engine can generate all legal moves for a given chess position, including standard moves, castling, en passant, and pawn promotion.
 
