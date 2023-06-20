@@ -5,6 +5,9 @@ This Chess Engine is a computer program designed to handle the logic and rules o
 State of code: 16/06/2023
 > - Currently the code only acts as an engine for chess and has no AI functionality currently, however this will be added in future progression.
 
+State of code: 20/06/2023
+> - A simple AI has been added to be able to make a random move out of the valid available moves to the computer.
+
 ## Features
 
 > - Move Generation: The engine can generate all legal moves for a given chess position, including standard moves, castling, en passant, and pawn promotion.
