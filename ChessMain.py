@@ -1,4 +1,4 @@
-import ChessEngine
+import ChessEngine, SmartMoveFinder
 import pygame as p
 
 '''
@@ -37,14 +37,18 @@ def main():
     playerClicks = []
     gameOver = False
     
+    playerOne = True # if human playing white, set as true
+    playerTwo = False # if AI is playing, set as False
+    
     while running:
+        humanTurn = (gs.whitemove == True and playerOne) or (not gs.whitemove and playerTwo)
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
                 
             # mouse handler
             elif e.type == p.MOUSEBUTTONDOWN:
-                if not gameOver:
+                if not gameOver and humanTurn:
                     location = p.mouse.get_pos()
                     col = location[0]//sq_size
                     row = location[1]//sq_size
@@ -80,6 +84,13 @@ def main():
                     playerClicks = []
                     moveMade = False
                     animate = False
+        
+        # AI move finder
+        if not gameOver and not humanTurn:
+            AIMove = SmartMoveFinder.findRandomMove(validMoves)
+            gs.makeMove(AIMove)
+            moveMade = True
+            animate = True
                     
         if moveMade:
             if animate:
