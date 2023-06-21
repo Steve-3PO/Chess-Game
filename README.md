@@ -8,6 +8,9 @@ State of code: 16/06/2023
 State of code: 20/06/2023
 > - A simple AI has been added to be able to make a random move out of the valid available moves to the computer.
 
+State of code: 22/06/2023
+> - An AI is able to use NegaMax and alpha beta pruning to select the best moves, with a depth selectable. Currently too slow to have recursion depths of 5+.
+
 ## Features
 
 > - Move Generation: The engine can generate all legal moves for a given chess position, including standard moves, castling, en passant, and pawn promotion.
